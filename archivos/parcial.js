@@ -39,23 +39,33 @@ const Cargar = () => {
 const Mostrar = () => {
     // Variable para ir armando la cadena:
     let html = ``;
+    let discoMax;
 
     if (listadoDiscos.length == 0) {
         html += '<p>No hay discos cargados</p>';
     } else {
         for (let disco of listadoDiscos) {
+            let max = 0;
+            
             html += disco.mostrarDatos()
 
-            html += `<p>PISTAS BB ${disco.mostrarCantidadPistas()} <p>`
+            html += `<p>Cantidad de pistas del disco: ${disco.mostrarCantidadPistas()} <p>`
 
-            html += `<p>Duracion total del disco: ${disco.mostrarDuracionTotal()}</p>`
+            html += `<p>Duración total del disco: ${disco.mostrarDuracionTotal()}</p>`
             html += `<p>Promedio total del disco: ${disco.mostrarPromedioTotalDuracion()}</p>`
-            html += `<p>Promedio total del disco: ${disco.mostrarPistaMayorDuracion()}</p>`
+            html += `<p>Pista de mayor duración: ${disco.mostrarPistaMayorDuracion()}</p>`
+
+            if(disco.mostrarDuracionTotal() > max){
+                max = disco.mostrarDuracionTotal()
+                discoMax = disco.getNombreDisco() + ` (` + disco.mostrarDuracionTotal() + `")`;
+                
+            } 
             
         }
-        html += `<p>cantidad de discos cargados ${listadoDiscos.length} </p>`
+        html += `<p>cantidad de discos cargados ${listadoDiscos.length}</p>`
     }
 
+    html += `<p>El disco de mayor duración entre todos los discos es: ${discoMax}</p>`;
 
     document.getElementById('info').innerHTML = html;
 }
@@ -195,31 +205,20 @@ function Disco() {
     let pistas = [];
 
     this.mostrarPistaMayorDuracion = function () {
-        let min = 0;
         let max = 0;
         let n = 0;
         let cont = 0;
-        let pista = '';
+        let pistaMax = '';
         for (let pista of pistas) {
             n = pista.getDuracionPista()
-
-            for (let i = 0; i < this.mostrarCantidadPistas(); i++) {
-                if (cont == 0) {
-                    min = n;
-                    max = n;
-                } else {
-                    if(n < min) {
-                        min = n;
-                    }
-                    if(n > max) {
-                        max = n
-                    }
-                }
-            }
-            cont++
+            if(pista.getDuracionPista() > max){
+                max = pista.getDuracionPista()
+                pistaMax = pista.getNombrePista() + ` (` + pista.getDuracionPista() + `")`;
+            } 
+            
         }
 
-        return `<p>MIN ${min} MAX ${max}</p>`
+        return `<p> MAX ${pistaMax}</p>`
     }
 
     this.mostrarCantidadPistas = function () {
@@ -229,6 +228,8 @@ function Disco() {
     this.guardarPista = function (pista) {
         pistas.push(pista);
     }
+
+    
 
     this.mostrarPistas = function () {
         let m = '';
@@ -310,6 +311,7 @@ function Pista() {
     this.getDuracionPista = function () {
         return this.duracionPista;
     }
+    
 }
 
 function ErrorMsg() {
@@ -339,3 +341,35 @@ function ErrorMsg() {
         alert(codigoDuplicado)
     }
 }
+
+let discoPrueba = new Disco();
+
+discoPrueba.setIdDisco(123);
+discoPrueba.setNombreDisco("nombre")
+discoPrueba.setInterprete("nombreInterprete")
+
+listadoDiscos.push(discoPrueba);
+
+let discoPrueba2 = new Disco();
+
+discoPrueba2.setIdDisco(100);
+discoPrueba2.setNombreDisco("nombreDisco2")
+discoPrueba2.setInterprete("nombreInterprete2")
+
+listadoDiscos.push(discoPrueba2);
+
+let pistasPrueba = new Pista();
+let pistasPrueba2 = new Pista();
+let pistasPrueba3 = new Pista();
+
+pistasPrueba.setNombrePista("pista1");
+pistasPrueba.setDuracionPista(20);
+pistasPrueba2.setNombrePista("pista2");
+pistasPrueba2.setDuracionPista(40);
+discoPrueba.guardarPista(pistasPrueba);
+discoPrueba.guardarPista(pistasPrueba2);
+
+pistasPrueba3.setNombrePista("pistita2");
+pistasPrueba3.setDuracionPista(100);
+discoPrueba2.guardarPista(pistasPrueba3);
+

@@ -1,35 +1,57 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Programación I | Parcial 1 | Jaureguialzo, Manuela | Fernández Bugna, Florencia</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no" />
-        <link rel="shortcut icon" href="favicon.ico" />
-        <link rel="stylesheet" href="estilo.css" />
-        <script src="parcial.js"></script>
-    </head>
-    <body>
-        <header>
-            <h1>Programación I | Parcial 1 | Jaureguialzo, Manuela | Fernández Bugna, Florencia</h1>
-        </header>
-        <main>
-            <h2>Mis discos</h2>
-            <button onclick="Cargar();">Cargar nuevo disco</button>
-            <button onclick="Mostrar();">Mostrar discos</button>
-            <button onclick="Buscar();">Buscar disco</button>
-            <div id="info"></div>
-            
 
+<head>
+    <meta charset="utf-8" />
+    <title>Programación I | Parcial 1 | Jaureguialzo, Manuela | Fernández Bugna, Florencia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="estilo.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <script src="parcial.js"></script>
+</head>
+
+<body>
+    <header>
+        <!-- <h1>Programación I | Parcial 1 | Jaureguialzo, Manuela | Fernández Bugna, Florencia</h1> -->
+        <nav>
+            <li>
+                <button id="buscar" onclick="Buscar();">Buscar disco</button>
+            </li>
+            <li>
+                <button onclick="Mostrar();">Mostrar discos</button>
+            </li>
+            <li>
+                <button onclick="Cargar();">Cargar nuevo disco</button>
+            </li>
+        </nav>
+
+        <h1>Jaureguialzo, Manuela; Fernández Bugna, Florencia</h1>
+
+
+    </header>
+    <main>
+        <h2>Mis discos</h2>
+        <div id="info">
             
-        </main>
-        <footer>
-            <ul>
-                <li>Profesor Federico Noto</li>
-                <li>
-                    <a href="mailto:federico.noto@davinci.edu.ar?subject=P1%20-%20Consulta%20-%20DW2[M|T|N][A|B]%20-%20Apellido,%20Nombre" target="_blank">federico.noto@davinci.edu.ar</a>
-                </li>
-                <li>Programación 1</li>
-            </ul>
-        </footer>
-    </body>
+        </div>
+        <div id="newDisco">
+
+        </div>
+
+
+    </main>
+    <footer>
+        <ul>
+            <li>Profesor Federico Noto</li>
+            <li>
+                <a href="mailto:federico.noto@davinci.edu.ar?subject=P1%20-%20Consulta%20-%20DW2[M|T|N][A|B]%20-%20Apellido,%20Nombre"
+                    target="_blank">federico.noto@davinci.edu.ar</a>
+            </li>
+            <li>Programación 1</li>
+        </ul>
+    </footer>
+</body>
+
 </html>
