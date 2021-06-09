@@ -39,46 +39,28 @@ const Cargar = () => {
 const Mostrar = () => {
     // Variable para ir armando la cadena:
     let html = ``;
-    let discoMax;
 
     if (listadoDiscos.length == 0) {
         html += '<p>No hay discos cargados</p>';
     } else {
+        let newDisco = ``; 
+
         for (let disco of listadoDiscos) {
-            let max = 0;
             
-            html += disco.mostrarDatos()
-
-            html += `<p>Cantidad de pistas del disco: ${disco.mostrarCantidadPistas()} <p>`
-
-            html += `<p>Duración total del disco: ${disco.mostrarDuracionTotal()}</p>`
-            html += `<p>Promedio total del disco: ${disco.mostrarPromedioTotalDuracion()}</p>`
-            html += `<p>Pista de mayor duración: ${disco.mostrarPistaMayorDuracion()}</p>`
-
-            if(disco.mostrarDuracionTotal() > max){
-                max = disco.mostrarDuracionTotal()
-                discoMax = disco.getNombreDisco() + ` (` + disco.mostrarDuracionTotal() + `")`;
-                
-            } 
+            newDisco += `<article class="newDisco">${disco.mostrarDatos()}</article>`
             
+            document.getElementById('contenedorDiscos').innerHTML = newDisco;
         }
-        html += `<p>cantidad de discos cargados ${listadoDiscos.length}</p>`
+        html += `<h2>Cantidad de discos cargados: ${listadoDiscos.length}</p>`
+        html += `<p>El disco de mayor duración es: <em>${getDiscoMayorDuracion()}</em></p>`;
     }
-
-    html += `<p>El disco de mayor duración entre todos los discos es: ${discoMax}</p>`;
-
     document.getElementById('info').innerHTML = html;
 }
 
 const Buscar = () => {
     let html = ``;
     let id = prompt('Ingrese el codigo del disco')
-    // const id = () => {
-    //     do {
-    //         prompt('Ingrese el codigo del disco')
-    //     } while(!(isNaN(id)) )
-    //     return id
-    // } 
+
     if (listadoDiscos.length >= 1) {
         let existeId = true;
         for (let disco of listadoDiscos) {
@@ -100,6 +82,18 @@ const Buscar = () => {
 }
 
 // Todas las funciones que necesites:
+function getDiscoMayorDuracion() {
+    let discoMax = 0;
+    for (let disco of listadoDiscos) {
+        let max = 0;
+
+        if(disco.mostrarDuracionTotal() > max){
+            max = disco.mostrarDuracionTotal()
+            discoMax = `${disco.getNombreDisco()} con una duracion de ${disco.mostrarDuracionTotal()}"`;
+        } 
+    }
+    return discoMax
+}
 
 function validacionEntradaIdDisco(msg) {
     let num
@@ -128,21 +122,21 @@ function validacionEntradaIdDisco(msg) {
 function validacionEntradaTexto(msg) {
     let texto;
     do {
-        // if(flag) {
-        //     error.showTextoInvalido();
-        //     if(flag == 3) {
-        //         error.showIntentosSuperados();
-        //         errorFlag = true
-        //         texto = campoIncompleto;
-        //         resetError()
-        //         break;
-        //     }
-        // }
+        if(flag) {
+            error.showTextoInvalido();
+            if(flag == 3) {
+                error.showIntentosSuperados();
+                errorFlag = true
+                texto = campoIncompleto;
+                resetError()
+                break;
+            }
+        }
         texto = prompt(msg)
-        // if(texto == null){
-        //     texto = campoIncompleto;
-        //     break
-        // }
+        if(texto == null){
+            texto = campoIncompleto;
+            break
+        }
         flag++
     } while (!isNaN(texto))
     resetError()
@@ -199,26 +193,26 @@ function validacionIdExistente(id) {
 }
 
 function Disco() {
-    let idDisco = 0
-    let nombreDisco = 'El lado oscuro de la let Programación'
-    let interprete = 'Los Programadores Anónimos'
+    let idDisco;
+    let nombreDisco;
+    let interprete;
     let pistas = [];
 
     this.mostrarPistaMayorDuracion = function () {
-        let max = 0;
-        let n = 0;
-        let cont = 0;
+        let mayor = 0;
         let pistaMax = '';
+        let color = ''
+        
         for (let pista of pistas) {
-            n = pista.getDuracionPista()
-            if(pista.getDuracionPista() > max){
-                max = pista.getDuracionPista()
-                pistaMax = pista.getNombrePista() + ` (` + pista.getDuracionPista() + `")`;
+
+            if(pista.getDuracionPista() > mayor){
+                mayor = pista.getDuracionPista()
+                mayor > 180 ? color = '"color: red"' : '"color: #fdca40"'
+                pistaMax = ` ${pista.getNombrePista()} <span style = ${color}>${pista.getDuracionPista()}"<span>`;
             } 
             
         }
-
-        return `<p> MAX ${pistaMax}</p>`
+        return pistaMax;
     }
 
     this.mostrarCantidadPistas = function () {
@@ -232,14 +226,15 @@ function Disco() {
     
 
     this.mostrarPistas = function () {
-        let m = '';
-        for (let pista of pistas) {
-            m += `<p> <strong> Nombre de la pista: </strong> ${pista.getNombrePista()} <p/>`
-            let color = ``
-            let msg = `<strong> Duración: </strong> ${pista.getDuracionPista()}`
+        
+        let m = `<p>Pista de mayor duración: ${this.mostrarPistaMayorDuracion()}<p/>`
 
-            let duracion = (pista.getDuracionPista() > 180) ? color = `<p style = "color: red">${msg}</p>` : color = `<p>${msg}</p>`
-            m += duracion;
+        for (let pista of pistas) {
+            let color;
+            (pista.getDuracionPista() > 180) ? color = '"color: red"' : '"color: #fdca40"';
+
+            m += `<p id="pista"> Nombre de la pista: ${pista.getNombrePista()} 
+                <span style = ${color}>${pista.getDuracionPista()}"</span><p/>`
         };
         return m;
     }
@@ -286,15 +281,20 @@ function Disco() {
 
     this.mostrarDatos = function () {
         let m = `
-			<p><strong>Id disco:</strong> ${this.getIdDisco()} <strong>nombre disco:</strong> ${this.getNombreDisco()} <strong>interprete:</strong> ${this.getInterprete()} <strong>PISTAS:</strong> ${this.mostrarPistas()}`;
+            <p><strong>Id del disco:</strong> ${this.getIdDisco()}</p>
+            <p><strong>Nombre del disco:</strong> ${this.getNombreDisco()}</p>
+            <p><strong>Intérprete:</strong> ${this.getInterprete()} </p>
+            <p><strong>Duración total del disco:</strong>  ${this.mostrarDuracionTotal()}"</p>
+            <p><strong>Promedio total del disco:</strong>  ${this.mostrarPromedioTotalDuracion()}"</p>
+            <p><strong>Pistas:</strong> (${this.mostrarCantidadPistas()}) ${this.mostrarPistas()} </p>`;
         return m;
     }
 
 }
 
 function Pista() {
-    let nombrePista = 'Esa cajita loca llamada variablecita'
-    let duracionPista = 200
+    let nombrePista;
+    let duracionPista;
 
     //getter y setter del nombrePista
     this.setNombrePista = function (nombre) {
@@ -353,23 +353,28 @@ listadoDiscos.push(discoPrueba);
 let discoPrueba2 = new Disco();
 
 discoPrueba2.setIdDisco(100);
-discoPrueba2.setNombreDisco("nombreDisco2")
-discoPrueba2.setInterprete("nombreInterprete2")
+discoPrueba2.setNombreDisco("El lado oscuro de la let Programación")
+discoPrueba2.setInterprete("Los Programadores Anónimos")
 
 listadoDiscos.push(discoPrueba2);
 
 let pistasPrueba = new Pista();
 let pistasPrueba2 = new Pista();
 let pistasPrueba3 = new Pista();
+let pistasPrueba4 = new Pista();
 
 pistasPrueba.setNombrePista("pista1");
 pistasPrueba.setDuracionPista(20);
-pistasPrueba2.setNombrePista("pista2");
-pistasPrueba2.setDuracionPista(40);
 discoPrueba.guardarPista(pistasPrueba);
+
+pistasPrueba2.setNombrePista("pista2");
+pistasPrueba2.setDuracionPista(400);
 discoPrueba.guardarPista(pistasPrueba2);
 
-pistasPrueba3.setNombrePista("pistita2");
-pistasPrueba3.setDuracionPista(100);
+pistasPrueba3.setNombrePista("pistita 1");
+pistasPrueba3.setDuracionPista(1000);
+pistasPrueba4.setNombrePista("pistita 2");
+pistasPrueba4.setDuracionPista(100);
 discoPrueba2.guardarPista(pistasPrueba3);
+discoPrueba2.guardarPista(pistasPrueba4);
 

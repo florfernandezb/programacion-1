@@ -13,6 +13,7 @@ header {
 }
 
 h1 {
+    width: 100%;
     text-align: center;
     line-height: 70px;
     color: #f8f4f9;
@@ -34,17 +35,37 @@ button {
 }
 
 #info {
-    width: 500px;
-    background-color: #2b2d42;
+    margin-top: 1em;
+    margin-left: 1em;
+    padding: 1em;
+    font-weight: bold;
 }
+
 
 #info button {
     background-color: #fdca40;
     color: #2b2d42;
 }
 
-#newDisco p {
+.newDisco {
+    margin: 2em;
     background-color: #2b2d42;
-    padding-top: 1em;
+    width: 400px;
+    height: 500px;
+    vertical-align: top;
     color: #fdca40;
+    display: inline-block;
+    padding: 2em;
+    border-radius: 1em;
 }
+
+
+
+.newDisco p {
+    margin-top: 10px;
+}
+
+#pista {
+    margin-left: 20px;
+}
+
