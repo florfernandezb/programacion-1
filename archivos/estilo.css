@@ -72,3 +72,36 @@ button {
 .busquedaDisco:target {
     background-color: red;
 }
+
+footer {
+    background-color: #2b2d42;
+    color: #fdca40;
+    width: 100%;
+    padding: 1em;
+    height: 130px;
+}
+
+footer ul {
+    list-style: none;
+}
+
+footer ul li {
+    text-align: center;
+    line-height: 1.5em;
+    display: inline-block;
+    width: 33%;
+}
+
+footer p {
+    text-align: center;
+    margin: 65px;
+}
+
+footer ul li a {
+    text-decoration: none;
+    color: #fdca40;
+}
+
+footer ul li a:hover {
+    color: #f8f4f9;
+}

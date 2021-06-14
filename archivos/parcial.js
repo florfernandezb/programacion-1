@@ -73,6 +73,7 @@ const Buscar = () => {
             if (disco.getIdDisco() == id) {
                 html += `<div class="busquedaDisco newDisco">${disco.getDatos()}</div>`;
                 existeId = true;
+                document.getElementById('contenedorDiscos').style.display = "none"
             } 
         }
         if (!existeId) {
